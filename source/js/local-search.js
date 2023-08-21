@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputEventFunction = () => {
     if (!isfetched) return;
     let searchText = input.value.trim().toLowerCase();
+    let onlyTitle = searchText.startsWith('title:');
     let keywords = searchText.split(/[-\s]+/);
     if (keywords.length > 1) {
       keywords.push(searchText);
@@ -106,7 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let searchTextCount = 0;
         keywords.forEach(keyword => {
           indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-          indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+          if (!onlyTitle) {
+            indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+          }
         });
 
         // Show search results
